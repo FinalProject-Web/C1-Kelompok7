@@ -5,12 +5,12 @@ include "connection/koneksi.php";
 session_start();
 ob_start();
 
+
 $id = $_SESSION['id_user'];
 
 if(isset($_SESSION['edit_menu'])){
   echo $_SESSION['edit_menu'];
   unset($_SESSION['edit_menu']);
-
 }
 
 if(isset ($_SESSION['username'])){
@@ -191,7 +191,6 @@ if(isset ($_SESSION['username'])){
                       //echo $_REQUEST['hapus_menu'];
                       $id_masakan = $_REQUEST['edit_menu'];
                       $_SESSION['edit_menu'] = $id_masakan;
-
                       header('location: tambah_menu.php');
                     }
                   ?>

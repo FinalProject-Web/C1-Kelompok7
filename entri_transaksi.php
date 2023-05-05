@@ -197,7 +197,7 @@ if(isset ($_SESSION['username'])){
           </select>
         </form>
         <form method="get" action="">
-          <input type="text" name="search" placeholder="Cari nama pemesan" value="<?php if(isset($_GET['search'])) echo $_GET['search'];?>">
+          <input type="text" name="search" maxlength="20" placeholder="Cari nama pemesan" autocomplete="off" value="<?php if(isset($_GET['search'])) echo $_GET['search'];?>">
           <button type="submit" class="tmbsearch">Cari</button>
         </form>
       </div>
