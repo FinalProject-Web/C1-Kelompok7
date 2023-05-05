@@ -198,7 +198,7 @@ if(isset ($_SESSION['username'])){
         </form>
         <form method="get" action="">
           <input type="text" name="search" placeholder="Cari nama pemesan" value="<?php if(isset($_GET['search'])) echo $_GET['search'];?>">
-          <button type="submit">Cari</button>
+          <button type="submit" class="tmbsearch">Cari</button>
         </form>
       </div>
     </div>
@@ -221,12 +221,20 @@ if(isset ($_SESSION['username'])){
       }
         ?>
         <?php
-          $query_sudah_order = "SELECT * FROM tb_order LEFT JOIN tb_user ON tb_order.id_pengunjung = tb_user.id_user WHERE status_order = 'sudah bayar'";
-          if(isset($_GET['search'])){
-            $search = $_GET['search'];
-            $query_sudah_order .= " AND nama_user LIKE '%$search%'";
+        $query_sudah_order = "SELECT * FROM tb_order LEFT JOIN tb_user ON tb_order.id_pengunjung = tb_user.id_user WHERE status_order = 'sudah bayar'";
+        if(isset($_GET['search'])){
+          $search = mysqli_real_escape_string($conn, $_GET['search']);
+          $query_sudah_order .= " AND nama_user LIKE '%$search%'";
+        }
+          $result_sudah_order = mysqli_query($conn, $query_sudah_order);
+
+          if(mysqli_num_rows($result_sudah_order) > 0) {
+          
+          }else {
+              echo "<script>alert('Data tidak ditemukan.');</script>";
+              $query_sudah_order = "SELECT * FROM tb_order LEFT JOIN tb_user ON tb_order.id_pengunjung = tb_user.id_user WHERE status_order = 'sudah bayar'";
           }
-          if(isset($_GET['sorting'])){
+                  if(isset($_GET['sorting'])){
             if($_GET['sorting'] == 'desc'){
               $query_sudah_order .= " ORDER BY waktu_pesan DESC";
             } else if($_GET['sorting'] == 'asc'){

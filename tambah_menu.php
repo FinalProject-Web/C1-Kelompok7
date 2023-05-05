@@ -155,7 +155,7 @@ if(isset ($_SESSION['username'])){
             <div class="control-group">
               <label class="control-label">Harga / Porsi :</label>
               <div class="controls">
-                <input name="harga" type="text" value="<?php echo $harga; ?>" class="span11" placeholder="Rupiah" />
+              <input name="harga" type="text" value="<?php echo $harga; ?>" class="span11" placeholder="Rupiah" pattern="^[0-9]*$" inputmode="numeric" "/>
               </div>
             </div>
             <div class="control-group">
@@ -220,7 +220,7 @@ if(isset ($_SESSION['username'])){
               //echo "<br>";
               //echo $nama_user . " || " . $username . " || " . $password . " || " . $id_level . " || " . $status;
               //echo "<br></br>";
-              $query_tambah_masakan = "insert into tb_masakan values ('','$nama_masakan','$harga','$stok','$status_masakan','$gambar')";
+              $query_tambah_masakan = "insert into tb_masakan values ('', REPLACE('$nama_masakan', '-', ''),REPLACE('$harga', '-', ''),REPLACE('$stok', '-', ''),'$status_masakan','$gambar')";
               $sql_tambah_masakan= mysqli_query($conn, $query_tambah_masakan);
               if($sql_tambah_masakan){
                 header('location: entri_referensi.php');
@@ -235,18 +235,22 @@ if(isset ($_SESSION['username'])){
             }
 
             if(isset($_POST['ubah_menu'])){
-              $nama_masakan = $_POST['nama_masakan'];
-              $harga = $_POST['harga'];
-              $stok = $_POST['stok'];
+              $nama_masakan = mysqli_real_escape_string($conn, $_POST['nama_masakan']);
+              $harga = mysqli_real_escape_string($conn, $_POST['harga']);
+              $stok = mysqli_real_escape_string($conn, $_POST['stok']);
+              
+          
               if($stok > 0){
-                $status_masakan = 'tersedia';
+                  $status_masakan = 'tersedia';
               } else {
-                $status_masakan = 'habis';
+                  $status_masakan = 'habis';
               }
-              $gbr = $_FILES["gambar"]["name"];
-
-              $query_ubah_masakan = "update tb_masakan set nama_masakan = '$nama_masakan', harga = '$harga', stok = '$stok', status_masakan = '$status_masakan' where id_masakan = '$id_masakan'";;
+              $gbr = $_FILES["gambar"]["name"];      
+              $query_ubah_masakan = "update tb_masakan set nama_masakan = REPLACE('$nama_masakan', '-', ''), harga = REPLACE('$harga', '-', ''), stok = REPLACE('$stok', '-', ''), status_masakan = '$status_masakan' where id_masakan = '$id_masakan'";
               $sql_ubah_masakan = mysqli_query($conn, $query_ubah_masakan);
+              if(!$sql_ubah_masakan){
+                echo "Error: " . mysqli_error($conn);
+            }
 
               //$gambar = file($_POST['gambar']);
               if($gbr != "" || $gbr != null){

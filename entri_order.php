@@ -179,17 +179,17 @@ if(isset ($_SESSION['username'])){
                 <tr>
                   <td><center><?php echo $no_order_fiks++; ?>. </center></td>
                   <td><?php echo $r_order_fiks['nama_masakan'];?></td>
-                  <td class="right"><center><?php echo $r_order_fiks['jumlah'];?></center></td>
+                  <td class="right"><center><?php echo isset($r_order_fiks['jumlah']) ? $r_order_fiks['jumlah'] : ''; ?></center></td>
                   <td class="right">Rp. <?php echo $r_order_fiks['harga'];?>,-</td>
                   <td class="right">
-                    <strong>
-                      Rp.
-                      <?php 
-                        $hasil = $r_order_fiks['harga'] * $r_order_fiks['jumlah'];
-                        echo $hasil;
-                      ?>,-
-                    </strong>
-                  </td>
+                      <strong>
+                        Rp.
+                        <?php 
+                          $hasil = abs($r_order_fiks['harga'] * $r_order_fiks['jumlah']); // gunakan fungsi abs() untuk menghilangkan nilai negatif
+                          echo $hasil;
+                        ?>,-
+                      </strong>
+                    </td>
                 </tr>
                 <?php
                   }
@@ -419,7 +419,7 @@ if(isset ($_SESSION['username'])){
             date_default_timezone_set('Asia/Jakarta');
             $time = Date('YmdHis');
             echo $time;
-            $query_simpan_order = "insert into tb_order values('', '$id_admin', '$id_pengunjung', $time, '$no_meja', '$total_harga', '$uang_bayar', '$uang_kembali', '$status_order')";
+            $query_simpan_order = "insert into tb_order values('', '$id_admin', '$id_pengunjung', $time, REPLACE('$no_meja', '-', ''), REPLACE('$total_harga', '-', ''), '$uang_bayar', '$uang_kembali', '$status_order')";
             $sql_simpan_order = mysqli_query($conn, $query_simpan_order);
 
             $query_tampil_order = "select * from tb_order where id_pengunjung = $id order by id_order desc limit 1";
@@ -427,6 +427,21 @@ if(isset ($_SESSION['username'])){
             $result_tampil_order = mysqli_fetch_array($sql_tampil_order);
 
             $id_ordernya = $result_tampil_order['id_order'];
+
+           
+            // $query_cek_menu = "SELECT COUNT(*) AS jumlah_menu FROM tb_pesan WHERE id_user = $id";
+            // $sql_cek_menu = mysqli_query($conn, $query_cek_menu);
+            // $row_cek_menu = mysqli_fetch_assoc($sql_cek_menu);
+            // $jumlah_menu = $row_cek_menu['jumlah_menu'];
+
+            // if($jumlah_menu == 0){
+            //   echo '<div class="alert alert-warning">
+            //           Anda belum memesan menu apapun!
+            //         </div>';
+            // } else {
+
+            // }
+
 
             $query_ubah_jumlah = "select * from tb_pesan left join tb_masakan on tb_pesan.id_masakan = tb_masakan.id_masakan where id_user = $id and status_pesan != 'sudah'";
             $sql_ubah_jumlah = mysqli_query($conn, $query_ubah_jumlah);

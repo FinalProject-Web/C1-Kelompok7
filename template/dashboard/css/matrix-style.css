@@ -508,15 +508,15 @@ hr{ border-top-color:#dadada;}
 }
 /* Widgets */
 .widget-box {
-	background: none repeat scroll 0 0 #F9F9F9;
-	border-left: 1px solid #CDCDCD;
-	border-top: 1px solid #CDCDCD;
-	border-right: 1px solid #CDCDCD;
-	clear: both;
-	margin-top: 16px;
-	margin-bottom: 16px;
-	position: relative;
-}
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	margin-bottom: 20px;
+	overflow: hidden;
+	padding: 10px;
+  }
+  
 .widget-box.widget-calendar, .widget-box.widget-chat {
 	overflow:hidden !important;
 }
@@ -531,6 +531,22 @@ hr{ border-top-color:#dadada;}
 	margin-top: 0;
 	margin-bottom: 0;
 }
+
+.widget-title {
+	background-color: #f5f5f5;
+	border-bottom: 1px solid #ccc;
+	color: #333;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 10px;
+  }
+
+  .widget-content {
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+	padding: 10px;
+  }
+
 .widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header {
 	 background:#efefef;
 	border-bottom: 1px solid #CDCDCD;
@@ -582,6 +598,13 @@ hr{ border-top-color:#dadada;}
 	float: right;
 	margin: 8px 10px 0 0;
 }
+
+.widget-title .tmbsearch{
+	border-radius: 3px;
+	margin-top: -9px;
+	margin-left: 12px;
+}
+
 .widget-title .label {
 	padding: 3px 5px 2px;
 	float: right;
@@ -1028,14 +1051,77 @@ div.dataTables_wrapper .ui-widget-header {
 .dataTables_filter input {
 	margin-bottom: 0;
 }
-.table th {
-	height: auto;
-	font-size: 10px;
-	padding: 5px 10px 2px;
-	border-bottom: 0;
+
+.table {
+	border-collapse: collapse;
+	width: 100%;
+  }
+
+  .table th,
+  .table td {
+	border: 1px solid #ccc;
+	padding: 8px;
+	text-align: left;
+  }
+
+  .table th {
+	background-color: #f5f5f5;
+	font-weight: bold;
+  }
+
+  .table td {
+	vertical-align: top;
+  }
+
+  .right {
+	text-align: right;
+  }
+
+  .btn {
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #fff;
+	display: inline-block;
+	font-size: 14px;
+	margin-right: 10px;
+	padding: 6px 12px;
 	text-align: center;
-	color: #666666;
-}
+	text-decoration: none;
+  }
+  
+  .btn-mini {
+	font-size: 12px;
+	padding: 4px 8px;
+  }
+  
+  .btn-danger {
+	background-color: #e74c3c;
+	border-color: #e74c3c;
+	color: #fff;
+  }
+  
+  .btn-success {
+	background-color: #2ecc71;
+	border-color: #2ecc71;
+	color: #fff;
+  }
+  
+  .btn:hover {
+	background-color: #27AE60;
+	color: #f5f5f5;
+  }
+  
+  .btn-danger:hover {
+	background-color: #c0392b;
+	border-color: #c0392b;
+	color: #fff;
+  }
+  
+  .btn-success:hover {
+	background-color: #27ae60;
+	border-color: #27ae60;
+	color: #fff;
+  }
 .table.with-check tr th:first-child, .table.with-check tr td:first-child {
 	width: 10px;
 }
