@@ -148,7 +148,7 @@ if (isset($_SESSION['username'])) {
                       <div class="alert alert-info alert-block">
                         <h4 class="alert-heading">Informasi !</h4>
                         Terimakasih, Anda telah melakukan pemesanan.<br>
-                        Silahkan tunggu pesanan tiba di meja saudara. Apabila selesai menyantap hidangan, silahkan lakukan proses pembayaran di kasir !
+                        Silahkan tunggu pesanan tiba di meja Anda.
                       </div>
                     </div>
                   </div>
@@ -270,12 +270,12 @@ if (isset($_SESSION['username'])) {
                                       <td><?php echo $r_dt_makanan['nama_masakan']; ?></td>
                                     </tr>
                                     <tr>
-                                      <td>Harga / Porsi</td>
+                                      <td>Harga </td>
                                       <td>Rp. <?php echo $r_dt_makanan['harga']; ?>,-</td>
                                     </tr>
                                     <tr>
                                       <td>Stok</td>
-                                      <td><?php echo $r_dt_makanan['stok']; ?> Porsi</td>
+                                      <td><?php echo $r_dt_makanan['stok']; ?> </td>
                                     </tr>
                                   </tbody>
                                 </table>

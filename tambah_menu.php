@@ -50,9 +50,10 @@ if (isset($_SESSION['username'])) {
     <html lang="en">
 
     <head>
-      <title>Entri Referensi</title>
+      <title>Tambah Menu</title>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="icon" type="image/jpg" href="template/masuk/images/logo.jpg"/>
       <link rel="stylesheet" href="template/dashboard/css/bootstrap.min.css" />
       <link rel="stylesheet" href="template/dashboard/css/bootstrap-responsive.min.css" />
       <link rel="stylesheet" href="template/dashboard/css/fullcalendar.css" />
@@ -146,7 +147,7 @@ if (isset($_SESSION['username'])) {
                 <div class="widget-content">
                   <form action="" method="post" class="form-horizontal" accept-charset="UTF-8" enctype="multipart/form-data">
                     <div class="control-group">
-                      <label class="control-label">Nama Menu:</label>
+                      <label class="control-label">Nama :</label>
                       <div class="controls">
                       <?php
                           if (isset($_SESSION['edit_menu'])) {
@@ -168,7 +169,7 @@ if (isset($_SESSION['username'])) {
                       </div>
                     </div>
                     <div class="control-group">
-                      <label class="control-label">Harga / Porsi :</label>
+                      <label class="control-label">Harga :</label>
                       <div class="controls">
                         <input name="harga" type="text" value="<?php echo $harga; ?>" class="span11" placeholder="Rupiah" pattern="^[1-9][0-9]*$" inputmode="numeric" required>
                       </div>
@@ -180,7 +181,7 @@ if (isset($_SESSION['username'])) {
                       </div>
                     </div>
                     <div class="control-group">
-                      <label class="control-label">Gambar Masakan :</label>
+                      <label class="control-label">Gambar Menu :</label>
                       <div class="control-group">
                         <div class="controls">
                           <input class="span11" value="" name="gambar" type="file" accept="image/*" onchange="preview(this,'previewne')" required>
