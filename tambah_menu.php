@@ -194,21 +194,22 @@ if (isset($_SESSION['username'])) {
                     </div>
                     <div class="form-actions">
                     <?php
+
                       if (isset($_SESSION['edit_menu'])) {
-                      ?>
-                        <button type="submit" name="ubah_menu" class="btn btn-info"><i class='icon icon-save'></i>&nbsp; Simpan Perubahan</button>
-                      <?php
+                    ?>
+                      <button type="submit" name="ubah_menu" class="btn btn-info"><i class='icon icon-save'></i>&nbsp; Simpan Perubahan</button>
+                    <?php
                       } else {
-                      ?>
-                        <button type="submit" name="tambah_menu" class="btn btn-success"><i class='icon icon-plus'></i>&nbsp; Tambahkan</button>
-                      <?php
+                    ?>
+                      <button type="submit" name="tambah_menu" class="btn btn-success"><i class='icon icon-plus'></i>&nbsp; Tambahkan</button>
+                    <?php
                       }
-                      ?>
-                      <a href="entri_referensi.php" name="batal" class="btn btn-danger"><i class='icon icon-remove'></i>&nbsp; Batalkan</a>
-                      <?php
-                      
-                      ?>
-                    </div>
+                    ?>
+                    <a href="entri_referensi.php" name="batal" class="btn btn-danger"><i class='icon icon-remove'></i>&nbsp; Batalkan</a>
+                    <?php
+
+                    ?>
+                  </div>
                   </form>
                   <?php
                   if (isset($_POST['tambah_menu'])) {
@@ -243,10 +244,12 @@ if (isset($_SESSION['username'])) {
                   }
                   if (isset($_REQUEST['batal_menu'])) {
                     //echo $_REQUEST['hapus_menu'];
+                    
                     if (isset($_SESSION['edit_menu'])) {
                       unset($_SESSION['edit_menu']);
                     }
                     header('location: entri_referensi.php');
+
                   }
 
                   if (isset($_POST['ubah_menu'])) {

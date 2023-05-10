@@ -156,7 +156,7 @@ if (isset($_SESSION['username'])) {
                         Silahkan tunggu pesanan tiba di meja saudara. Apabila selesai menyantap hidangan, silahkan lakukan proses pembayaran di kasir !
                       </div>
   
-                      <a href="entri_order.php" value="" class="btn btn-primary">Kembali</a>
+                      <!-- <a href="entri_order.php" value="" class="btn btn-primary">Kembali</a> -->
                     </div>
                   </div>
                 </div>
