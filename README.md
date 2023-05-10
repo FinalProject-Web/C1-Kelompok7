@@ -42,4 +42,27 @@ Penjelasan Use Case:
 1. Pada role kasir sama halnya dengan pengguna biasa yaitu melakukan login terlebih dahulu dengan memasukkan username dan password.
 2. Jika berhasil login, akan tampil halaman website seperti gambar dibawah ini.
 3. Tugas utama kasir yaitu membantu pelanggan melakukan pembayaran dengan memasukkan uang pembayaran pelanggan, dan memberikan uang kembalian jika ada.
-4. Kemudian selain itu, kasir dapat melihat rekap pendapatan perhari dari Takofee.
+![Entri Transaksi - Google Chrome 10_05_2023 23_12_31](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/a98b6f0b-4ef6-4934-87a6-0338386ef4c8)
+
+4. Selain itu, kasir dapat melihat rekap pendapatan perhari dari Takofee.
+![Entri Transaksi - Google Chrome 10_05_2023 23_14_15](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/d02490c9-a90a-4761-8c34-8f25ab1a7b86)
+
+
+### C. Admin
+1. Sama dengan role lainnya, role admin juga perlu melakukan login terlebih dahulu sebelum mengakses website.
+2. Tampilan awal pada role admin yaitu menampilkan data pengguna website Takofee seperti gambar dibawah ini.
+![Beranda - Google Chrome 10_05_2023 23_06_56](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/bdbdf00c-b76f-43ab-8006-de3609cd7de6)
+
+3. Kemudian admin dapat melakukan penambahan data, pada kasus ini admin dapat menambah data menu pada halamann Entri Referensi.
+- Tampilan entri referensi
+![Entri Referensi - Google Chrome 10_05_2023 23_09_00](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/1e07c0c0-8dcf-46e1-9ab6-e9dd64e5b418)
+
+- Tambah menu
+![Entri Referensi - Google Chrome 10_05_2023 23_09_30](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/2c8b3d04-178b-421f-9806-e2ba682a1086)
+
+- Berhasil tambah menu
+![Entri Referensi - Google Chrome 10_05_2023 23_09_43](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/92e2c9c8-ce17-42d1-880f-5272191b117c)
+
+4. Selanjutnya sama seperti role kasir, admin juga dapat melihat data penjualan harian (rekap) pada halaman Generate Laporan 
+![Entri Transaksi - Google Chrome 10_05_2023 23_12_15](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/f2c2bff2-1c58-41cf-b455-493bd604b28e)
+
