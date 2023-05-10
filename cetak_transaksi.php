@@ -115,7 +115,10 @@ if (isset($_SESSION['username'])) {
         <div class="container">
           <span id="remove">
             <a class="btn btn-success" id="ct"><span class="icon-print"></span> CETAK</a>
+                <a class="btn btn-primary" href="entri_transaksi.php">Kembali</a>
+
           </span>
+          
         </div>
         <?php
         $id_order = $_REQUEST['konten'];
@@ -126,7 +129,7 @@ if (isset($_SESSION['username'])) {
         ?>
         <center>
           <h4>
-            LeBron Cafe
+            Takofee
           </h4>
           <span>
             Jl. Ks Tubun Dalam No. 93 Sidodadi, Kec. Samarinda Ulu, Kota Samarinda, Kaltim<br>
@@ -261,9 +264,12 @@ if (isset($_SESSION['username'])) {
         <center>
           <h5>
             TERIMAKASIH ATAS KUNJUNGANNYA
+            
           </h5>
+
         </center>
         <hr>
+
 
       </page>
     </body>

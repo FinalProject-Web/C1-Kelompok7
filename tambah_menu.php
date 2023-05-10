@@ -2,17 +2,14 @@
 
 <?php
 include "connection/koneksi.php";
-
 session_start();
 ob_start();
-// echo $_SESSION['edit_menu'];
-// if (isset($_POST['batal'])) {
-//   echo $_SESSION['edit_menu'];
-//   unset($_SESSION['edit_menu']);
-//   header('Location: entri_referensi.php');
-//   exit();
-// }
 
+if (!isset($_SERVER['HTTP_REFERER'])) {
+  header('Location: logout.php');
+  exit;
+}
+//echo $_SESSION['edit_menu'];
 $id = $_SESSION['id_user'];
 
 if (isset($_SESSION['username'])) {
@@ -50,10 +47,9 @@ if (isset($_SESSION['username'])) {
     <html lang="en">
 
     <head>
-      <title>Tambah Menu</title>
+      <title>Entri Referensi</title>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="icon" type="image/jpg" href="template/masuk/images/logo.jpg"/>
       <link rel="stylesheet" href="template/dashboard/css/bootstrap.min.css" />
       <link rel="stylesheet" href="template/dashboard/css/bootstrap-responsive.min.css" />
       <link rel="stylesheet" href="template/dashboard/css/fullcalendar.css" />
@@ -97,8 +93,8 @@ if (isset($_SESSION['username'])) {
         <ul>
           <li><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
           <li class="active"> <a href="entri_referensi.php"><i class="icon icon-tasks"></i> <span>Entri Referensi</span></a> </li>
-          <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li>
-          <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li>
+          <!-- <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li>
+          <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li> -->
           <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
         </ul>
       </div>
@@ -147,7 +143,7 @@ if (isset($_SESSION['username'])) {
                 <div class="widget-content">
                   <form action="" method="post" class="form-horizontal" accept-charset="UTF-8" enctype="multipart/form-data">
                     <div class="control-group">
-                      <label class="control-label">Nama :</label>
+                      <label class="control-label">Nama Menu:</label>
                       <div class="controls">
                       <?php
                           if (isset($_SESSION['edit_menu'])) {
@@ -169,22 +165,22 @@ if (isset($_SESSION['username'])) {
                       </div>
                     </div>
                     <div class="control-group">
-                      <label class="control-label">Harga :</label>
+                      <label class="control-label">Harga / Porsi :</label>
                       <div class="controls">
-                        <input name="harga" type="text" value="<?php echo $harga; ?>" class="span11" placeholder="Rupiah" pattern="^[1-9][0-9]*$" inputmode="numeric" required>
+                        <input name="harga" type="text" value="<?php echo $harga; ?>" class="span11" pattern="[0-9]*" placeholder="Rupiah" />
                       </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Stok Persediaan :</label>
                       <div class="controls">
-                        <input name="stok" value="<?php echo $stok; ?>" type="number" class="span11" min="1" placeholder="Jumlah Stok" required>
+                        <input name="stok" value="<?php echo $stok; ?>" type="number" min="1" class="span11" placeholder="Jumlah Stok" />
                       </div>
                     </div>
                     <div class="control-group">
-                      <label class="control-label">Gambar Menu :</label>
+                      <label class="control-label">Gambar Masakan :</label>
                       <div class="control-group">
                         <div class="controls">
-                          <input class="span11" value="" name="gambar" type="file" accept="image/*" onchange="preview(this,'previewne')" required>
+                          <input class="span11" value="" name="gambar" type="file" accept="image/*" onchange="preview(this,'previewne')" />
                         </div>
                       </div>
                     </div>
@@ -192,12 +188,12 @@ if (isset($_SESSION['username'])) {
                       <label class="control-label"></label>
                       <div class="control-group">
                         <div class="controls">
-                          <img src="gambar/no_image.png" <?php echo $gambar_masakan; ?>" id="previewne" class="rounded border p-1" style="width:110px; height:70px;">
-                        </div>
+                          <img src="gambar/<?php echo $gambar_masakan; ?>" id="previewne" class="rounded border p-1" style="width:110px; height:70px;">
+                        </div>  
                       </div>
                     </div>
                     <div class="form-actions">
-                      <?php
+                    <?php
                       if (isset($_SESSION['edit_menu'])) {
                       ?>
                         <button type="submit" name="ubah_menu" class="btn btn-info"><i class='icon icon-save'></i>&nbsp; Simpan Perubahan</button>
@@ -210,7 +206,7 @@ if (isset($_SESSION['username'])) {
                       ?>
                       <a href="entri_referensi.php" name="batal" class="btn btn-danger"><i class='icon icon-remove'></i>&nbsp; Batalkan</a>
                       <?php
-                      unset($_SESSION['edit_menu']);
+                      
                       ?>
                     </div>
                   </form>
@@ -239,7 +235,7 @@ if (isset($_SESSION['username'])) {
                     //echo "<br>";
                     //echo $nama_user . " || " . $username . " || " . $password . " || " . $id_level . " || " . $status;
                     //echo "<br></br>";
-                    $query_tambah_masakan = "insert into tb_masakan values ('', REPLACE('$nama_masakan', '-', ''),REPLACE('$harga', '-', ''),REPLACE('$stok', '-', ''),'$status_masakan','$gambar')";
+                    $query_tambah_masakan = "insert into tb_masakan values ('','$nama_masakan','$harga','$stok','$status_masakan','$gambar')";
                     $sql_tambah_masakan = mysqli_query($conn, $query_tambah_masakan);
                     if ($sql_tambah_masakan) {
                       header('location: entri_referensi.php');
@@ -254,22 +250,18 @@ if (isset($_SESSION['username'])) {
                   }
 
                   if (isset($_POST['ubah_menu'])) {
-                    $nama_masakan = mysqli_real_escape_string($conn, $_POST['nama_masakan']);
-                    $harga = mysqli_real_escape_string($conn, $_POST['harga']);
-                    $stok = mysqli_real_escape_string($conn, $_POST['stok']);
-
-
+                    $nama_masakan = $_POST['nama_masakan'];
+                    $harga = $_POST['harga'];
+                    $stok = $_POST['stok'];
                     if ($stok > 0) {
                       $status_masakan = 'tersedia';
                     } else {
                       $status_masakan = 'habis';
                     }
                     $gbr = $_FILES["gambar"]["name"];
+
                     $query_ubah_masakan = "update tb_masakan set nama_masakan = REPLACE('$nama_masakan', '-', ''), harga = REPLACE('$harga', '-', ''), stok = REPLACE('$stok', '-', ''), status_masakan = '$status_masakan' where id_masakan = '$id_masakan'";
                     $sql_ubah_masakan = mysqli_query($conn, $query_ubah_masakan);
-                    if (!$sql_ubah_masakan) {
-                      echo "Error: " . mysqli_error($conn);
-                    }
 
                     //$gambar = file($_POST['gambar']);
                     if ($gbr != "" || $gbr != null) {
@@ -321,7 +313,6 @@ if (isset($_SESSION['username'])) {
             } else {
               alert("Type file tidak sesuai. Khusus image.");
             }
-
           }
         }
       </script>

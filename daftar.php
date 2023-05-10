@@ -22,6 +22,10 @@ session_start();
   <link rel="stylesheet" href="css/bootstrap-wysihtml5.css" />
   <link href="template/dashboard/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+  <!-- Tambahkan library jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Tambahkan library SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -96,7 +100,7 @@ session_start();
                   <div class="controls">
                     <select class="span11" name="id_level">
                       <!-- <option value="1">Administrator</option> -->
-                      <option value="2">Waiter</option>
+                      <!-- <option value="2">Waiter</option> -->
                       <option value="3">Kasir</option>
                       <option value="5">Pelanggan</option>
                     </select>
@@ -113,14 +117,40 @@ session_start();
                 $password = $_POST['password'];
                 $id_level = $_POST['id_level'];
                 $status = 'nonaktif';
-                //echo "<br>";
-                //echo $nama_user . " || " . $username . " || " . $password . " || " . $id_level . " || " . $status;
-                //echo "<br></br>";
-                $query_daftar = "insert into tb_user values ('','$username','$password','$nama_user','$id_level','$status')";
-                $sql_daftar = mysqli_query($conn, $query_daftar);
-                if ($sql_daftar) {
-                  header('location: index.php');
+
+                // Periksa apakah username sudah ada di database
+                $query_check_username = "SELECT * FROM tb_user WHERE username='$username'";
+                $result_check_username = mysqli_query($conn, $query_check_username);
+                if (mysqli_num_rows($result_check_username) > 0) {
+                  // Jika username sudah ada, tampilkan pesan kesalahan 
+                  echo "
+                  <script>
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Username sudah ada. Silakan gunakan username lain.'
+                    });
+                  </script>
+                ";
+                } else {
+                  // Jika username belum ada, lakukan proses pendaftaran
+                  $query_daftar = "INSERT INTO tb_user VALUES ('', '$username', '$password', '$nama_user', '$id_level', '$status')";
+                  $sql_daftar = mysqli_query($conn, $query_daftar);
+                  if ($sql_daftar) {
+                    // Jika pendaftaran berhasil, tampilkan popup t
+                    echo "
+                    <script>
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Registrasi Berhasil',
+                        text: 'Anda telah berhasil mendaftar'
+                      }).then(function() {
+                        window.location.href = 'index.php'; // Redirect ke halaman lain setelah popup ditutup
+                      });
+                    </script>
+                  ";
                   $_SESSION['daftar'] = 'sukses';
+                  }
                 }
               }
               ?>
@@ -130,6 +160,7 @@ session_start();
       </div>
     </div>
   </div>
+
   <!--Footer-part-->
   <div class="row-fluid">
     <div id="footer" class="span12"> <?php echo date('Y'); ?> &copy; Takofee <a href="#">by Kelompok 7 C1</a> </div>
