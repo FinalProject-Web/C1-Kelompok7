@@ -29,7 +29,17 @@ Penjelasan Use Case:
 ![Masuk __ Takofee - Google Chrome 10_05_2023 22_44_50](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/d3c2e1e7-25da-442a-8de0-3e4098031cdd)
 
 2. Apabila pengguna ingin mendaftarkan akun baru, maka tampilan websitenya akan seperti gambar dibawah ini. Pengguna dapat mengisi form pendaftaran akun sesuai dengan ketentuan.
+![Daftar - Google Chrome 10_05_2023 22_48_51](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/bed62c33-b3fb-4c32-8d1b-186b81fb1f1d)
 
-3.  
-4. 
-5. 
+3. Apabila pengguna sudah memiliki akun, pengguna dapat melakukan login dengan memasukkan username dan password, kemudian jika berhasil login akan tampil halaman seperti gambar dibawah ini.
+
+4. Untuk halaman entri order berisi tempat untuk memesan produk dari Takofee.
+![Entri Order - Google Chrome 10_05_2023 22_55_10](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/31012fc8-c2df-4804-874e-4369df93f53f)
+
+5. Pengguna dapat memesan produk Takofee dengan mengklik tombol pesan, kemudian mengisi jumlah pesanan dan nomor meja yang ada disebelah kanan website kemudian pesanan akan segera diproses.
+
+### B. Kasir
+1. Pada role kasir sama halnya dengan pengguna biasa yaitu melakukan login terlebih dahulu dengan memasukkan username dan password.
+2. Jika berhasil login, akan tampil halaman website seperti gambar dibawah ini.
+3. Tugas utama kasir yaitu membantu pelanggan melakukan pembayaran dengan memasukkan uang pembayaran pelanggan, dan memberikan uang kembalian jika ada.
+4. Kemudian selain itu, kasir dapat melihat rekap pendapatan perhari dari Takofee.
