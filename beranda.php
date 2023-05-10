@@ -6,10 +6,7 @@ session_start();
 ob_start();
 
 
-if (!isset($_SERVER['HTTP_REFERER'])) {
-    header('Location: index.php');
-    exit;
-}
+
 
 
 
@@ -553,9 +550,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
 
                       <div class="content">
                           <h3 class="title">What's make our coffee special!</h3>
-                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel rerum laboriosam reprehenderit ipsa id
-                              repellat odio illum, voluptas, necessitatibus assumenda adipisci. Hic, maiores iste? Excepturi illo
-                              dolore mollitia qui quia.</p>
+                          <p>Takofee is one of the fastest growing grab-and-go coffee chain in Indonesia. 
+                            The idea of Takofee started because the founders have the mission to spread their passion for Indonesian coffee 
+                            as a local brand from Indonesia to the rest of the world.</p>
                           <!-- <a href="#" class="btn">read more</a> -->
                           <div class="icons-container">
                               <div class="icons">
