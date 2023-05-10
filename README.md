@@ -46,6 +46,7 @@ Penjelasan Use Case:
 
 4. Selain itu, kasir dapat melihat rekap pendapatan perhari dari Takofee.
 ![Entri Transaksi - Google Chrome 10_05_2023 23_14_15](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/d02490c9-a90a-4761-8c34-8f25ab1a7b86)
+![Transaksi - Google Chrome 10_05_2023 23_23_20](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/8c7d7f91-2e70-4f60-a7c0-fb59c1c2c995)
 
 
 ### C. Admin
