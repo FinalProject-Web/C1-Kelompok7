@@ -5,6 +5,11 @@ include "connection/koneksi.php";
 session_start();
 ob_start();
 
+if (!isset($_SERVER['HTTP_REFERER'])) {
+  header('Location: logout.php');
+  exit;
+}
+
 $id = $_SESSION['id_user'];
 
 if (isset($_SESSION['edit_menu'])) {
@@ -31,7 +36,6 @@ if (isset($_SESSION['username'])) {
       <title>Transaksi</title>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="icon" type="image/jpg" href="template/masuk/images/logo.jpg"/>
       <link rel="stylesheet" href="template/dashboard/css/bootstrap.min.css" />
       <link rel="stylesheet" href="template/dashboard/css/bootstrap-responsive.min.css" />
       <link rel="stylesheet" href="template/dashboard/css/fullcalendar.css" />

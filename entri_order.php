@@ -5,6 +5,11 @@ include "connection/koneksi.php";
 session_start();
 ob_start();
 
+if (!isset($_SERVER['HTTP_REFERER'])) {
+  header('Location: logout.php');
+  exit;
+}
+
 $id = $_SESSION['id_user'];
 
 if (isset($_SESSION['edit_menu'])) {
@@ -75,8 +80,8 @@ if (isset($_SESSION['username'])) {
           ?>
             <li> <a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li> <a href="entri_referensi.php"><i class="icon icon-tasks"></i> <span>Entri Referensi</span></a> </li>
-            <li class="active"> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li>
-            <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li>
+            <!-- <li class="active"> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li> -->
+            <!-- <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li> -->
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
             <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
           <?php
@@ -124,7 +129,7 @@ if (isset($_SESSION['username'])) {
         <div class="container-fluid">
 
           <?php
-          if ($r['id_level'] == 1 || $r['id_level'] == 2 || $r['id_level'] == 5) {
+          if ($r['id_level'] == 5) {
           ?>
             <p></p>
             <?php
@@ -148,8 +153,10 @@ if (isset($_SESSION['username'])) {
                       <div class="alert alert-info alert-block">
                         <h4 class="alert-heading">Informasi !</h4>
                         Terimakasih, Anda telah melakukan pemesanan.<br>
-                        Silahkan tunggu pesanan tiba di meja Anda.
+                        Silahkan tunggu pesanan tiba di meja saudara. Apabila selesai menyantap hidangan, silahkan lakukan proses pembayaran di kasir !
                       </div>
+  
+                      <a href="entri_order.php" value="" class="btn btn-primary">Kembali</a>
                     </div>
                   </div>
                 </div>
@@ -270,12 +277,12 @@ if (isset($_SESSION['username'])) {
                                       <td><?php echo $r_dt_makanan['nama_masakan']; ?></td>
                                     </tr>
                                     <tr>
-                                      <td>Harga </td>
+                                      <td>Harga / Porsi</td>
                                       <td>Rp. <?php echo $r_dt_makanan['harga']; ?>,-</td>
                                     </tr>
                                     <tr>
                                       <td>Stok</td>
-                                      <td><?php echo $r_dt_makanan['stok']; ?> </td>
+                                      <td><?php echo $r_dt_makanan['stok']; ?> Porsi</td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -373,7 +380,7 @@ if (isset($_SESSION['username'])) {
                               <td>No. Meja</td>
                               <td>
                                 <center>
-                                  <input class="span8" name="no_meja" type="number" value="" min="1" placeholder="" required />
+                                  <input class="span8" name="no_meja" type="number" value="" min="1" pattern="-" placeholder="" id="myNumberInput" required />
                                 </center>
                               </td>
                               <td>
@@ -403,6 +410,9 @@ if (isset($_SESSION['username'])) {
                       </center>
 
                       <script>
+                        
+
+
                         function validatePesan() {
                           // Cek apakah ada pesanan yang dipilih
                           var pesanan = document.querySelectorAll('[id^="jumlah"]');

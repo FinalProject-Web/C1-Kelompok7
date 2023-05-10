@@ -5,6 +5,14 @@ include "connection/koneksi.php";
 session_start();
 ob_start();
 
+
+if (!isset($_SERVER['HTTP_REFERER'])) {
+    header('Location: index.php');
+    exit;
+}
+
+
+
 $id = $_SESSION['id_user'];
 
 if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
@@ -63,6 +71,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
       <link href="template/dashboard/font-awesome/css/font-awesome.css" rel="stylesheet" />
       <link rel="stylesheet" href="template/dashboard/css/jquery.gritter.css" />
       <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+      <link href="beranda/style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -98,8 +107,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
           ?>
             <li class="active"><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li> <a href="entri_referensi.php"><i class="icon icon-tasks"></i> <span>Entri Referensi</span></a> </li>
-            <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li>
-            <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li>
+            <!-- <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li> -->
+            <!-- <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li> -->
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
             <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
           <?php
@@ -147,7 +156,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
         <div class="container-fluid">
           <div class="row-fluid">
             <?php
-            if ($r['id_level'] == 1 || $r['id_level'] == 2 || $r['id_level'] == 3) {
+            if ($r['id_level'] == 1) {
             ?>
               <div class="widget-box">
                 <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
@@ -160,9 +169,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
                         <div class="widget-content nopadding">
                           <ul class="site-stats quick-actions">
                             <li class="bg_lb"><i class="icon-user"></i> <strong><?php echo $result_adm['jumlah_adm']; ?></strong> <small>Administrator</small></li>
-                            <li class="bg_ly"><i class="icon-user"></i> <strong><?php echo $result_wtr['jumlah_wtr']; ?></strong> <small>Total Waiter</small></li>
+                            <!-- <li class="bg_ly"><i class="icon-user"></i> <strong><?php echo $result_wtr['jumlah_wtr']; ?></strong> <small>Total Waiter</small></li> -->
                             <li class="bg_lg"><i class="icon-user"></i> <strong><?php echo $result_ksr['jumlah_ksr']; ?></strong> <small>Total Kasir</small></li>
-                            <li class="bg_ls"><i class="icon-user"></i> <strong><?php echo $result_own['jumlah_own']; ?></strong> <small>Total Owner</small></li>
+                            <!-- <li class="bg_ls"><i class="icon-user"></i> <strong><?php echo $result_own['jumlah_own']; ?></strong> <small>Total Owner</small></li> -->
                             <li class="bg_lo"><i class="icon-user"></i> <strong><?php echo $result_plg['jumlah_plg']; ?></strong> <small>Total Pelanggan</small></li>
                           </ul>
                         </div>
@@ -171,6 +180,69 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
                     <div class="span9">
                       <!--DATA WAITER-->
                       <div class="widget-box">
+                      <?php
+                        $query_data_adm = "select * from tb_user where id_level = 1";
+                        $sql_data_adm = mysqli_query($conn, $query_data_adm);
+                        $no = 1;
+                        ?>
+
+                        <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+                          <h5>Data Admin</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                          <table class="table table-bordered" style="width: 100%">
+                            <thead>
+                              <tr>
+                                <th style="width:5%">No.</th>
+                                <th style="width:25%">Nama</th>
+                                <th style="width:30%">Username</th>
+                                <th style="width:20%">Status</th>
+                                <th style="width:20%">Aksi</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <?php
+                              while ($r_dt_adm = mysqli_fetch_array($sql_data_adm)) {
+                              ?>
+                                <tr class="odd gradeX">
+                                  <td>
+                                    <center><?php echo $no++; ?>.</center>
+                                  </td>
+                                  <td><?php echo $r_dt_adm['nama_user']; ?></td>
+                                  <td><?php echo $r_dt_adm['username']; ?></td>
+                                  <td><?php echo $r_dt_adm['status']; ?></td>
+                                  <td>
+                                    <form action="" method="post">
+                                      <?php
+                                      if ($r_dt_adm['status'] == 'aktif') {
+                                      ?>
+                                        <button name="unvalidasi" value="<?php echo $r_dt_adm['id_user']; ?>" class="btn btn-warning btn-mini">
+                                          <i class='icon icon-remove'></i>
+                                        </button>
+                                      <?php
+                                      }
+                                      ?>
+
+                                      <?php
+                                      if ($r_dt_adm['status'] == 'nonaktif') {
+                                      ?>
+                                        <button name="validasi" value="<?php echo $r_dt_adm['id_user']; ?>" class="btn btn-info btn-mini"><i class='icon icon-ok'></i></button>
+                                        <button name="hapus_user" value="<?php echo $r_dt_adm['id_user']; ?>" class="btn btn-danger btn-mini"><i class='icon icon-trash'></i></button>
+                                      <?php
+                                      }
+                                      ?>
+                                    </form>
+                                  </td>
+                                </tr> 
+                              <?php
+                              }
+                              ?>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <!--DATA WAITER-->
+                      <!-- <div class="widget-box">
                         <?php
                         $query_data_wtr = "select * from tb_user where id_level = 2";
                         $sql_data_wtr = mysqli_query($conn, $query_data_wtr);
@@ -224,14 +296,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
                                       ?>
                                     </form>
                                   </td>
-                                </tr>
+                                </tr> 
                               <?php
                               }
                               ?>
                             </tbody>
                           </table>
                         </div>
-                      </div>
+                      </div> -->
                       <!--DATA KASIR-->
                       <div class="widget-box">
                         <?php
@@ -297,7 +369,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
                       </div>
 
                       <!--DATA OWNER-->
-                      <div class="widget-box">
+                      <!-- <div class="widget-box">
                         <?php
                         $query_data_own = "select * from tb_user where id_level = 4";
                         $sql_data_own = mysqli_query($conn, $query_data_own);
@@ -358,7 +430,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
                             </tbody>
                           </table>
                         </div>
-                      </div>
+                      </div> -->
 
                       <!--DATA PELANGGAN-->
                       <div class="widget-box">
@@ -464,12 +536,44 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
             <?php
             } else {
             ?>
-              <div class="alert alert-orange alert-block">
-                <center>
+            <!-- Beranda User sama Kasir -->
+              <div class="alert alert-orange alert-block" name="alertx" id="alertx">
+                <!-- <center>
                   <h4 class="alert-heading">SELAMAT DATANG</h4>
                   di Takofee Cafee
                   <br> Semoga hari Anda menyenangkan.
-                </center>
+                </center> -->
+                <!-- ABOUT -->
+              <section class="about" id="about">
+                  <h1 class="heading">About us<span> why choose us</span> </h1>
+                  <div class="row">
+                      <div class="image">
+                          <img src="gambar/about-img.png" height="" alt="">
+                      </div>
+
+                      <div class="content">
+                          <h3 class="title">What's make our coffee special!</h3>
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel rerum laboriosam reprehenderit ipsa id
+                              repellat odio illum, voluptas, necessitatibus assumenda adipisci. Hic, maiores iste? Excepturi illo
+                              dolore mollitia qui quia.</p>
+                          <!-- <a href="#" class="btn">read more</a> -->
+                          <div class="icons-container">
+                              <div class="icons">
+                                  <img src="gambar/about-icon-1.png" alt="">
+                                  <h3>Quality Coffee</h3>
+                              </div>
+                              <div class="icons">
+                                  <img src="gambar/about-icon-2.png" alt="">
+                                  <h3>Our Branches</h3>
+                              </div>
+                              <div class="icons">
+                                  <img src="gambar/about-icon-3.png" alt="">
+                                  <h3>Free Delivery</h3>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </section>
               </div>
             <?php
             }
@@ -510,6 +614,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
       <script src="template/dashboard/js/matrix.popover.js"></script>
       <script src="template/dashboard/js/jquery.dataTables.min.js"></script>
       <script src="template/dashboard/js/matrix.tables.js"></script>
+      <script src="js.script.js"></script>
 
       <script type="text/javascript">
         // This function is called from the pop-up menus to transfer to
