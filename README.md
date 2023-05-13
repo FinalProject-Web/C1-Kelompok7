@@ -15,6 +15,7 @@ Penjelasan ERD :
 5. Pesan memiliki relasi N to N dengan Menu karena 1 pesanan dapat memilih 1 atau lebih dari 1 menu, sebaliknya.
 6. Pesan memiliki relasi 1 to 1 dengan Order karena 1 pesanan hanya dapat dibayar oleh 1 Order (transaksi).
 
+
 ![use case fixxx](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/e26b26f3-c933-42d4-8279-0b1a13ec62bc)
 
 Penjelasan Use Case:
@@ -44,8 +45,11 @@ Penjelasan Use Case:
 3. Tugas utama kasir yaitu membantu pelanggan melakukan pembayaran dengan memasukkan uang pembayaran pelanggan, dan memberikan uang kembalian jika ada.
 ![Entri Transaksi - Google Chrome 10_05_2023 23_12_31](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/a98b6f0b-4ef6-4934-87a6-0338386ef4c8)
 
+![Transaksi - Google Chrome 10_05_2023 23_23_20](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/8c7d7f91-2e70-4f60-a7c0-fb59c1c2c995)
+
 4. Selain itu, kasir dapat melihat rekap pendapatan perhari dari Takofee.
 ![Entri Transaksi - Google Chrome 10_05_2023 23_14_15](https://github.com/FinalProject-Web/C1-Kelompok7/assets/120191981/d02490c9-a90a-4761-8c34-8f25ab1a7b86)
+
 
 
 ### C. Admin
