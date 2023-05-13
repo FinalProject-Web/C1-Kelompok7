@@ -62,10 +62,29 @@ if (isset($_SESSION['username'])) {
           <li class="dropdown" id="profile-messages"><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i> <span class="text">Welcome <?php echo $r['nama_user']; ?></span><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="#"><i class="icon-user"></i><?php echo "&nbsp;&nbsp;" . $r['nama_level']; ?></a></li>
-              <li><a href="logout.php"><i class="icon-key"></i> Log Out</a></li>
+              <li><a href="#" id="logoutBtn"><i class="icon-key"></i> Log Out</a></li>
+
+              <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  document.getElementById('logoutBtn').addEventListener('click', function(event) {
+                    event.preventDefault();
+                    swal({
+                      title: "Konfirmasi",
+                      text: "Anda yakin ingin logout?",
+                      icon: "warning",
+                      buttons: ["Batal", "OK"]
+                    }).then(function(value) {
+                      if (value) {
+                        window.location.href = "logout.php";
+                      }
+                    });
+                  });
+                });
+              </script>
             </ul>
           </li>
-          <li class=""><a title="" href="logout.php"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+          <!-- <li class=""><a title="" href="logout.php"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li> -->
         </ul>
       </div>
       <!--close-top-Header-menu-->
@@ -83,33 +102,33 @@ if (isset($_SESSION['username'])) {
             <!-- <li class="active"> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li> -->
             <!-- <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li> -->
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
           <?php
           } else if ($r['id_level'] == 2) {
           ?>
             <li><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li class="active"> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li>
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
           <?php
           } else if ($r['id_level'] == 3) {
           ?>
             <li><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li>
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
           <?php
           } else if ($r['id_level'] == 4) {
           ?>
             <li><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
           <?php
           } else if ($r['id_level'] == 5) {
           ?>
             <li><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li class="active"> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
           <?php
           }
           ?>
@@ -155,7 +174,7 @@ if (isset($_SESSION['username'])) {
                         Terimakasih, Anda telah melakukan pemesanan.<br>
                         Silahkan tunggu pesanan tiba di meja saudara. Apabila selesai menyantap hidangan, silahkan lakukan proses pembayaran di kasir !
                       </div>
-  
+
                       <!-- <a href="entri_order.php" value="" class="btn btn-primary">Kembali</a> -->
                     </div>
                   </div>
@@ -410,9 +429,6 @@ if (isset($_SESSION['username'])) {
                       </center>
 
                       <script>
-                        
-
-
                         function validatePesan() {
                           // Cek apakah ada pesanan yang dipilih
                           var pesanan = document.querySelectorAll('[id^="jumlah"]');
@@ -441,15 +457,15 @@ if (isset($_SESSION['username'])) {
             }
             if (isset($_POST['hapus_pesan'])) {
               $id_pesan = $_POST['hapus_pesan'];
-              
+
               // Hapus terlebih dahulu data di tb_stok yang terkait dengan id_pesan yang ingin dihapus
               $query_hapus_stok = "DELETE FROM tb_stok WHERE id_pesan = $id_pesan";
               $sql_hapus_stok = mysqli_query($conn, $query_hapus_stok);
-              
+
               // Setelah data di tb_stok terhapus, baru hapus data di tb_pesan
               $query_hapus_pesan = "DELETE FROM tb_pesan WHERE id_pesan = $id_pesan";
               $sql_hapus_pesan = mysqli_query($conn, $query_hapus_pesan);
-            
+
               if ($sql_hapus_pesan) {
                 header('location: entri_order.php');
               }

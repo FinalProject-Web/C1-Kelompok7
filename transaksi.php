@@ -61,10 +61,29 @@ if (isset($_SESSION['username'])) {
           <li class="dropdown" id="profile-messages"><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i> <span class="text">Welcome <?php echo $r['nama_user']; ?></span><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="#"><i class="icon-user"></i><?php echo "&nbsp;&nbsp;" . $r['nama_level']; ?></a></li>
-              <li><a href="logout.php"><i class="icon-key"></i> Log Out</a></li>
+              <li><a href="#" id="logoutBtn"><i class="icon-key"></i> Log Out</a></li>
+
+              <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  document.getElementById('logoutBtn').addEventListener('click', function(event) {
+                    event.preventDefault();
+                    swal({
+                      title: "Konfirmasi",
+                      text: "Anda yakin ingin logout?",
+                      icon: "warning",
+                      buttons: ["Batal", "OK"]
+                    }).then(function(value) {
+                      if (value) {
+                        window.location.href = "logout.php";
+                      }
+                    });
+                  });
+                });
+              </script>
             </ul>
           </li>
-          <li class=""><a title="" href="logout.php"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+          <!-- <li class=""><a title="" href="logout.php"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li> -->
         </ul>
       </div>
       <!--close-top-Header-menu-->
@@ -75,11 +94,11 @@ if (isset($_SESSION['username'])) {
       <div id="sidebar"><a href="entri_referensi.php" class="visible-phone"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a>
         <ul>
           <li> <a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
-          <li> <a href="entri_referensi.php"><i class="icon icon-tasks"></i> <span>Entri Referensi</span></a> </li>
-          <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li>
+          <!-- <li> <a href="entri_referensi.php"><i class="icon icon-tasks"></i> <span>Entri Referensi</span></a> </li> -->
+          <!-- <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li> -->
           <li class="active"> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li>
           <li> <a href="widgets.html"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
-          <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+          <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
         </ul>
       </div>
       <!--sidebar-menu-->
@@ -103,7 +122,7 @@ if (isset($_SESSION['username'])) {
         <div class="container-fluid">
           <div class="row-fluid">
             <?php
-            if ($r['id_level'] == 1 || $r['id_level'] == 3) {
+            if ($r['id_level'] == 3) {
               $id_order = $_SESSION['edit_order'];
               $query_pemesan = "select * from tb_order left join tb_user on tb_order.id_pengunjung = tb_user.id_user where id_order = $id_order";
               $sql_pemesan = mysqli_query($conn, $query_pemesan);
@@ -188,19 +207,19 @@ if (isset($_SESSION['username'])) {
                       <div class="control-group">
                         <label class="control-label">Membayar : Rp.</label>
                         <div class="controls">
-                          <input type="number" id="uang_bayar" name="uang_bayar" class="span11" placeholder="" onchange="return operasi()" />
+                          <input type="number" id="uang_bayar" name="uang_bayar" class="span11" placeholder="" onchange="operasi()" />
                         </div>
                       </div>
                       <div class="control-group">
                         <label class="control-label">Kembalian : Rp.</label>
                         <div class="controls">
-                          <input type="number" id="uang_kembali1" class="span11" placeholder="" disabled="" />
+                          <input type="number" id="uang_kembali1" class="span11" placeholder="" disabled />
                           <input type="hidden" id="uang_kembali" name="uang_kembali" class="span11" placeholder="" />
                         </div>
                       </div>
                       <p></p>
                       <center>
-                        <button type="submit" value="<?php echo $result_harga['id_order']; ?>" name="save_order" class="btn btn-success btn-mini">
+                        <button type="submit" value="<?php echo $result_harga['id_order']; ?>" name="save_order" class="btn btn-success btn-mini" id="btn-transaksi" disabled>
                           <i class='icon-print'></i>
                           &nbsp;&nbsp;Transaksi Selesai&nbsp;&nbsp;
                         </button>
@@ -211,6 +230,8 @@ if (isset($_SESSION['username'])) {
                       </center>
                       <p></p><br>
                     </form>
+
+
                   </div>
                 </div>
               </div>
@@ -228,14 +249,28 @@ if (isset($_SESSION['username'])) {
                 }
                 $uang_bayar = $_POST['uang_bayar'];
                 $uang_kembali = $_POST['uang_kembali'];
-                $query_save_transaksi = "update tb_order set id_admin = $id, uang_bayar = $uang_bayar, uang_kembali = $uang_kembali, status_order = 'sudah bayar' where id_order = $id_order";
-                echo $query_save_transaksi;
-                $sql_save_transaksi = mysqli_query($conn, $query_save_transaksi);
 
-                $query_selesai_pesan = "update tb_pesan set status_pesan = 'sudah' where id_user = $id_pemesan and status_pesan != 'sudah'";
-                $sql_selesai_pesan = mysqli_query($conn, $query_selesai_pesan);
-                if ($sql_selesai_pesan) {
-                  header('location: entri_transaksi.php');
+                if (empty($uang_bayar)) {
+                  echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';
+                  echo '<script>';
+                  echo 'swal("Peringatan", "Pembayaran harus diisi!", "warning").then(() => { window.location.href = "entri_transaksi.php"; });';
+                  echo '</script>';
+                } else {
+                  $query_save_transaksi = "UPDATE tb_order SET id_admin = $id, uang_bayar = $uang_bayar, uang_kembali = $uang_kembali, status_order = 'sudah bayar' WHERE id_order = $id_order";
+                  echo $query_save_transaksi;
+                  $sql_save_transaksi = mysqli_query($conn, $query_save_transaksi);
+
+                  if ($sql_save_transaksi) {
+                    $query_selesai_pesan = "UPDATE tb_pesan SET status_pesan = 'sudah' WHERE id_user = $id_pemesan AND status_pesan != 'sudah'";
+                    $sql_selesai_pesan = mysqli_query($conn, $query_selesai_pesan);
+                    if ($sql_selesai_pesan) {
+                      header('location: entri_transaksi.php');
+                    } else {
+                      echo "Error: " . mysqli_error($conn);
+                    }
+                  } else {
+                    echo "Error: " . mysqli_error($conn);
+                  }
                 }
               }
             }
@@ -244,17 +279,22 @@ if (isset($_SESSION['username'])) {
           <!--End-Action boxes-->
         </div>
       </div>
-      <script type="text/javascript">
+      <script>
         function operasi() {
-          var total_biaya = $("#total_biaya").text();
-          var uang_bayar = $("#uang_bayar").val();
-          var kembalian = Number(uang_bayar - total_biaya);
+          var total_biaya = parseFloat($("#total_biaya").text());
+          var uang_bayar = parseFloat($("#uang_bayar").val());
+          var kembalian = uang_bayar - total_biaya;
+
           if (kembalian < 0) {
+            $("#uang_kembali1").val("");
+            $("#uang_kembali").val("");
+            $("#btn-transaksi").prop("disabled", true);
             alert("Uang pembayaran kurang !");
-            return false;
+          } else {
+            $("#uang_kembali1").val(kembalian);
+            $("#uang_kembali").val(kembalian);
+            $("#btn-transaksi").prop("disabled", false);
           }
-          $("#uang_kembali1").val(kembalian);
-          $("#uang_kembali").val(kembalian);
         }
       </script>
       <!--end-main-container-part-->
