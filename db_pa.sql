@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Bulan Mei 2023 pada 10.28
+-- Waktu pembuatan: 13 Bulan Mei 2023 pada 19.44
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -58,13 +58,6 @@ CREATE TABLE `tb_masakan` (
   `gambar_masakan` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data untuk tabel `tb_masakan`
---
-
-INSERT INTO `tb_masakan` (`id_masakan`, `nama_masakan`, `harga`, `stok`, `status_masakan`, `gambar_masakan`) VALUES
-(1, 'Latte', '20000', 18, 'tersedia', 'Latte.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -106,14 +99,6 @@ CREATE TABLE `tb_pesan` (
   `status_pesan` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data untuk tabel `tb_pesan`
---
-
-INSERT INTO `tb_pesan` (`id_pesan`, `id_user`, `id_order`, `id_masakan`, `jumlah`, `status_pesan`) VALUES
-(20, 6, 1, 1, 1, 'sudah'),
-(24, 5, 2, 1, 2, 'sudah');
-
 -- --------------------------------------------------------
 
 --
@@ -126,14 +111,6 @@ CREATE TABLE `tb_stok` (
   `jumlah_terjual` int(11) DEFAULT NULL,
   `status_cetak` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data untuk tabel `tb_stok`
---
-
-INSERT INTO `tb_stok` (`id_stok`, `id_pesan`, `jumlah_terjual`, `status_cetak`) VALUES
-(1, 20, 1, 'belum cetak'),
-(5, 24, 2, 'belum cetak');
 
 -- --------------------------------------------------------
 
@@ -194,16 +171,16 @@ ALTER TABLE `tb_order`
 --
 ALTER TABLE `tb_pesan`
   ADD PRIMARY KEY (`id_pesan`),
-  ADD KEY `id_user` (`id_user`),
   ADD KEY `id_order` (`id_order`),
-  ADD KEY `id_masakan` (`id_masakan`);
+  ADD KEY `tb_pesan_ibfk_3` (`id_masakan`),
+  ADD KEY `tb_stok` (`id_user`);
 
 --
 -- Indeks untuk tabel `tb_stok`
 --
 ALTER TABLE `tb_stok`
   ADD PRIMARY KEY (`id_stok`),
-  ADD KEY `id_pesan` (`id_pesan`);
+  ADD KEY `tb_stok_ibfk_1` (`id_pesan`);
 
 --
 -- Indeks untuk tabel `tb_user`
@@ -261,14 +238,14 @@ ALTER TABLE `tb_user`
 -- Ketidakleluasaan untuk tabel `tb_pesan`
 --
 ALTER TABLE `tb_pesan`
-  ADD CONSTRAINT `tb_pesan_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`),
-  ADD CONSTRAINT `tb_pesan_ibfk_3` FOREIGN KEY (`id_masakan`) REFERENCES `tb_masakan` (`id_masakan`);
+  ADD CONSTRAINT `tb_pesan_ibfk_3` FOREIGN KEY (`id_masakan`) REFERENCES `tb_masakan` (`id_masakan`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tb_stok` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`);
 
 --
 -- Ketidakleluasaan untuk tabel `tb_stok`
 --
 ALTER TABLE `tb_stok`
-  ADD CONSTRAINT `tb_stok_ibfk_1` FOREIGN KEY (`id_pesan`) REFERENCES `tb_pesan` (`id_pesan`);
+  ADD CONSTRAINT `tb_stok_ibfk_1` FOREIGN KEY (`id_pesan`) REFERENCES `tb_pesan` (`id_pesan`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_user`
