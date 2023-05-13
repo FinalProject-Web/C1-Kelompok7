@@ -99,7 +99,7 @@ session_start();
                   <label class="control-label">Level Pengguna</label>
                   <div class="controls">
                     <select class="span11" name="id_level">
-                      <!-- <option value="1">Administrator</option> -->
+                      <option value="1">Administrator</option>
                       <!-- <option value="2">Waiter</option> -->
                       <option value="3">Kasir</option>
                       <option value="5">Pelanggan</option>

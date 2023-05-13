@@ -441,9 +441,15 @@ if (isset($_SESSION['username'])) {
             }
             if (isset($_POST['hapus_pesan'])) {
               $id_pesan = $_POST['hapus_pesan'];
-              $query_hapus_pesan = "delete from tb_pesan where id_pesan = $id_pesan";
+              
+              // Hapus terlebih dahulu data di tb_stok yang terkait dengan id_pesan yang ingin dihapus
+              $query_hapus_stok = "DELETE FROM tb_stok WHERE id_pesan = $id_pesan";
+              $sql_hapus_stok = mysqli_query($conn, $query_hapus_stok);
+              
+              // Setelah data di tb_stok terhapus, baru hapus data di tb_pesan
+              $query_hapus_pesan = "DELETE FROM tb_pesan WHERE id_pesan = $id_pesan";
               $sql_hapus_pesan = mysqli_query($conn, $query_hapus_pesan);
-
+            
               if ($sql_hapus_pesan) {
                 header('location: entri_order.php');
               }
@@ -458,7 +464,7 @@ if (isset($_SESSION['username'])) {
               $uang_kembali = '';
               $status_order = 'belum bayar';
 
-              date_default_timezone_set('Asia/Jakarta');
+              date_default_timezone_set('Asia/Makassar');
               $time = Date('YmdHis');
               echo $time;
               $query_simpan_order = "insert into tb_order values('', '$id_admin', '$id_pengunjung', $time, REPLACE('$no_meja', '-', ''), REPLACE('$total_harga', '-', ''), '$uang_bayar', '$uang_kembali', '$status_order')";

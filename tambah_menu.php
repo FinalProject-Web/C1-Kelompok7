@@ -158,7 +158,7 @@ if (isset($_SESSION['username'])) {
                                 input.value = input.value.replace(/[^a-zA-Z'\s]/g, ''); // hanya mengizinkan huruf, spasi dan tanda kutip satu
                               }
                             </script>
-                            <input name="nama_masakan" type="text" value="" class="span11" placeholder="Nama Menu" maxlength="20" oninput="validasiInput(this)" required>
+                            <input name="nama_masakan" type="text" value="" class="span11" placeholder="Nama Menu" maxlength="20" oninput="validasiInput(this)"autocomplete="off" required>
                             <?php
                           }
                           ?>
@@ -167,7 +167,7 @@ if (isset($_SESSION['username'])) {
                     <div class="control-group">
                       <label class="control-label">Harga / Porsi :</label>
                       <div class="controls">
-                        <input name="harga" type="text" value="<?php echo $harga; ?>" class="span11" pattern="[0-9]*" placeholder="Rupiah" />
+                        <input name="harga" type="text" value="<?php echo $harga; ?>" class="span11" pattern="[0-9]*" autocomplete="off" placeholder="Rupiah" />
                       </div>
                     </div>
                     <div class="control-group">
