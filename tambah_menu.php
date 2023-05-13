@@ -75,10 +75,29 @@ if (isset($_SESSION['username'])) {
           <li class="dropdown" id="profile-messages"><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i> <span class="text">Welcome <?php echo $r['nama_user']; ?></span><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="#"><i class="icon-user"></i><?php echo "&nbsp;&nbsp;" . $r['nama_level']; ?></a></li>
-              <li><a href="logout.php"><i class="icon-key"></i> Log Out</a></li>
+              <li><a href="#" id="logoutBtn"><i class="icon-key"></i> Log Out</a></li>
+
+              <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  document.getElementById('logoutBtn').addEventListener('click', function(event) {
+                    event.preventDefault();
+                    swal({
+                      title: "Konfirmasi",
+                      text: "Anda yakin ingin logout?",
+                      icon: "warning",
+                      buttons: ["Batal", "OK"]
+                    }).then(function(value) {
+                      if (value) {
+                        window.location.href = "logout.php";
+                      }
+                    });
+                  });
+                });
+              </script>
             </ul>
           </li>
-          <li class=""><a title="" href="logout.php"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+          <!-- <li class=""><a title="" href="logout.php"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li> -->
         </ul>
       </div>
       <!--close-top-Header-menu-->
@@ -145,23 +164,23 @@ if (isset($_SESSION['username'])) {
                     <div class="control-group">
                       <label class="control-label">Nama Menu:</label>
                       <div class="controls">
-                      <?php
-                          if (isset($_SESSION['edit_menu'])) {
-                            ?>
-                            <input name="" type="text" value="<?php echo $nama_masakan; ?>" class="span11" placeholder="Nama Masakan" disabled="" />
-                            <input name="nama_masakan" type="hidden" value="<?php echo $nama_masakan; ?>" class="span11" placeholder="Nama Masakan" />
-                            <?php
-                          } else {
-                            ?>
-                            <script>
-                              function validasiInput(input) {
-                                input.value = input.value.replace(/[^a-zA-Z'\s]/g, ''); // hanya mengizinkan huruf, spasi dan tanda kutip satu
-                              }
-                            </script>
-                            <input name="nama_masakan" type="text" value="" class="span11" placeholder="Nama Menu" maxlength="20" oninput="validasiInput(this)"autocomplete="off" required>
-                            <?php
-                          }
-                          ?>
+                        <?php
+                        if (isset($_SESSION['edit_menu'])) {
+                        ?>
+                          <input name="" type="text" value="<?php echo $nama_masakan; ?>" class="span11" placeholder="Nama Masakan" disabled="" />
+                          <input name="nama_masakan" type="hidden" value="<?php echo $nama_masakan; ?>" class="span11" placeholder="Nama Masakan" />
+                        <?php
+                        } else {
+                        ?>
+                          <script>
+                            function validasiInput(input) {
+                              input.value = input.value.replace(/[^a-zA-Z'\s]/g, ''); // hanya mengizinkan huruf, spasi dan tanda kutip satu
+                            }
+                          </script>
+                          <input name="nama_masakan" type="text" value="" class="span11" placeholder="Nama Menu" maxlength="20" oninput="validasiInput(this)" autocomplete="off" required>
+                        <?php
+                        }
+                        ?>
                       </div>
                     </div>
                     <div class="control-group">
@@ -189,27 +208,27 @@ if (isset($_SESSION['username'])) {
                       <div class="control-group">
                         <div class="controls">
                           <img src="gambar/<?php echo $gambar_masakan; ?>" id="previewne" class="rounded border p-1" style="width:110px; height:70px;">
-                        </div>  
+                        </div>
                       </div>
                     </div>
                     <div class="form-actions">
-                    <?php
+                      <?php
 
                       if (isset($_SESSION['edit_menu'])) {
-                    ?>
-                      <button type="submit" name="ubah_menu" class="btn btn-info"><i class='icon icon-save'></i>&nbsp; Simpan Perubahan</button>
-                    <?php
+                      ?>
+                        <button type="submit" name="ubah_menu" class="btn btn-info"><i class='icon icon-save'></i>&nbsp; Simpan Perubahan</button>
+                      <?php
                       } else {
-                    ?>
-                      <button type="submit" name="tambah_menu" class="btn btn-success"><i class='icon icon-plus'></i>&nbsp; Tambahkan</button>
-                    <?php
+                      ?>
+                        <button type="submit" name="tambah_menu" class="btn btn-success"><i class='icon icon-plus'></i>&nbsp; Tambahkan</button>
+                      <?php
                       }
-                    ?>
-                    <a href="entri_referensi.php" name="batal" class="btn btn-danger"><i class='icon icon-remove'></i>&nbsp; Batalkan</a>
-                    <?php
+                      ?>
+                      <a href="entri_referensi.php" name="batal" class="btn btn-danger"><i class='icon icon-remove'></i>&nbsp; Batalkan</a>
+                      <?php
 
-                    ?>
-                  </div>
+                      ?>
+                    </div>
                   </form>
                   <?php
                   if (isset($_POST['tambah_menu'])) {
@@ -244,12 +263,11 @@ if (isset($_SESSION['username'])) {
                   }
                   if (isset($_REQUEST['batal_menu'])) {
                     //echo $_REQUEST['hapus_menu'];
-                    
+
                     if (isset($_SESSION['edit_menu'])) {
                       unset($_SESSION['edit_menu']);
                     }
                     header('location: entri_referensi.php');
-
                   }
 
                   if (isset($_POST['ubah_menu'])) {

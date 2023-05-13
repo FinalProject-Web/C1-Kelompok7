@@ -117,12 +117,9 @@ session_start();
                 $password = $_POST['password'];
                 $id_level = $_POST['id_level'];
                 $status = 'nonaktif';
-
-                // Periksa apakah username sudah ada di database
                 $query_check_username = "SELECT * FROM tb_user WHERE username='$username'";
                 $result_check_username = mysqli_query($conn, $query_check_username);
                 if (mysqli_num_rows($result_check_username) > 0) {
-                  // Jika username sudah ada, tampilkan pesan kesalahan 
                   echo "
                   <script>
                     Swal.fire({
@@ -133,11 +130,8 @@ session_start();
                   </script>
                   ";
                 } else {
-                  // Jika username belum ada, lakukan proses pendaftaran
-
-                  // Hash password sebelum menyimpan ke database
+                
                   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
                   $query_daftar = "INSERT INTO tb_user VALUES ('', '$username', '$hashed_password', '$nama_user', '$id_level', '$status')";
                   $sql_daftar = mysqli_query($conn, $query_daftar);
                   if ($sql_daftar) {

@@ -89,10 +89,29 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
           <li class="dropdown" id="profile-messages"><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i> <span class="text">Welcome <?php echo $r['nama_user']; ?></span><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="#"><i class="icon-user"></i><?php echo "&nbsp;&nbsp;" . $r['nama_level']; ?></a></li>
-              <li><a href="logout.php"><i class="icon-key"></i> Log Out</a></li>
+              <li><a href="#" id="logoutBtn"><i class="icon-key"></i> Log Out</a></li>
+
+              <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  document.getElementById('logoutBtn').addEventListener('click', function(event) {
+                    event.preventDefault();
+                    swal({
+                      title: "Konfirmasi",
+                      text: "Anda yakin ingin logout?",
+                      icon: "warning",
+                      buttons: ["Batal", "OK"]
+                    }).then(function(value) {
+                      if (value) {
+                        window.location.href = "logout.php";
+                      }
+                    });
+                  });
+                });
+              </script>
             </ul>
           </li>
-          <li class=""><a title="" href="logout.php"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+          <!-- <li class=""><a title="" href="logout.php"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li> -->
         </ul>
       </div>
       <!--close-top-Header-menu-->
@@ -110,33 +129,35 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
             <!-- <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li> -->
             <!-- <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li> -->
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
+
+            <!-- //Admin -->
           <?php
           } else if ($r['id_level'] == 2) {
           ?>
             <li class="active"><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li>
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
           <?php
           } else if ($r['id_level'] == 3) {
           ?>
             <li class="active"><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li>
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
           <?php
           } else if ($r['id_level'] == 4) {
           ?>
             <li class="active"><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li> <a href="generate_laporan.php"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
           <?php
           } else if ($r['id_level'] == 5) {
           ?>
             <li class="active"><a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
             <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li>
-            <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li>
+            <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
           <?php
           }
           ?>

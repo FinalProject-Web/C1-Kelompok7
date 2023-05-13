@@ -42,16 +42,33 @@ if (isset($_SESSION['username'])) {
 						if (isset($_SESSION['eror'])) {
 						?>
 							<div class='container'>
-								<div class='alert alert-danger'>
-									<span>
-										<center>Mungkin Akun Anda Salah atau Belum Divalidasi</center>
-									</span>
-								</div>
+								<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+								<script>
+									document.addEventListener('DOMContentLoaded', function() {
+										swal({
+											title: "Error",
+											text: "Mungkin Akun Anda Salah atau Belum Divalidasi",
+											icon: "error",
+											button: {
+												text: "OK",
+												className: "sweet-alert-button"
+											},
+											closeOnClickOutside: false,
+										}).then(function() {
+											location.reload();
+										});
+
+										var button = document.getElementsByClassName('sweet-alert-button')[0];
+										button.style.display = "block";
+										button.style.margin = "0 auto";
+									});
+								</script>
 							</div>
 						<?php
 							unset($_SESSION['eror']);
 						}
 						?>
+
 						<div class="login100-form-avatar">
 							<img src="template/masuk/images/logo.jpg" alt="AVATAR">
 						</div>
@@ -124,6 +141,7 @@ if (isset($_SESSION['username'])) {
 
 			$akun = mysqli_query($conn, "SELECT * FROM tb_user NATURAL JOIN tb_level");
 			echo mysqli_error($conn);
+			$login_success = false;
 			while ($r = mysqli_fetch_array($akun)) {
 				if ($r['username'] == $username && password_verify($password, $r['password']) && $r['status'] == 'aktif') {
 					$_SESSION['username'] = $username;
@@ -132,15 +150,34 @@ if (isset($_SESSION['username'])) {
 					if (isset($_SESSION['eror'])) {
 						unset($_SESSION['eror']);
 					}
-					header('location: beranda.php');
-					// echo "<br>";
-					// echo $r['username'] . " || " . $r['password'] . " || " . $r['id_level'] . " || " . $r['nama_level'];
-					// echo "<br></br>";
+					$login_success = true;
 					break;
-				} else {
-					$_SESSION['eror'] = 'salah';
-					header('location: index.php');
 				}
+			}
+
+			if ($login_success) {
+				// SweetAlert code
+				$successMessage = "Login berhasil!";
+		?>
+				<div class='container'>
+					<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+					<script>
+						document.addEventListener('DOMContentLoaded', function() {
+							swal({
+								title: "Sukses",
+								text: "<?php echo $successMessage; ?>",
+								icon: "success",
+								button: "OK"
+							}).then(function() {
+								window.location.href = "beranda.php";
+							});
+						});
+					</script>
+				</div>
+		<?php
+			} else {
+				$_SESSION['eror'] = 'salah';
+				header('location: index.php');
 			}
 		}
 		?>
