@@ -94,9 +94,9 @@ if (isset($_SESSION['username'])) {
       <div id="sidebar"><a href="entri_referensi.php" class="visible-phone"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a>
         <ul>
           <li> <a href="beranda.php"><i class="icon icon-home"></i> <span>Beranda</span></a> </li>
-          <li> <a href="entri_referensi.php"><i class="icon icon-tasks"></i> <span>Entri Referensi</span></a> </li>
+          <!-- <li> <a href="entri_referensi.php"><i class="icon icon-tasks"></i> <span>Entri Referensi</span></a> </li> -->
           <!-- <li> <a href="entri_order.php"><i class="icon icon-shopping-cart"></i> <span>Entri Order</span></a> </li> -->
-          <!-- <li class="active"> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li> -->
+          <li class="active"> <a href="entri_transaksi.php"><i class="icon icon-inbox"></i> <span>Entri Transaksi</span></a> </li>
           <li> <a href="widgets.html"><i class="icon icon-print"></i> <span>Generate Laporan</span></a> </li>
           <!-- <li> <a href="logout.php"><i class="icon icon-sign-out"></i> <span>Logout</span></a> </li> -->
         </ul>
@@ -207,19 +207,19 @@ if (isset($_SESSION['username'])) {
                       <div class="control-group">
                         <label class="control-label">Membayar : Rp.</label>
                         <div class="controls">
-                          <input type="number" id="uang_bayar" name="uang_bayar" class="span11" placeholder="" onchange="return operasi()" />
+                          <input type="number" id="uang_bayar" name="uang_bayar" class="span11" placeholder="" onchange="operasi()" />
                         </div>
                       </div>
                       <div class="control-group">
                         <label class="control-label">Kembalian : Rp.</label>
                         <div class="controls">
-                          <input type="number" id="uang_kembali1" class="span11" placeholder="" disabled="" />
+                          <input type="number" id="uang_kembali1" class="span11" placeholder="" disabled />
                           <input type="hidden" id="uang_kembali" name="uang_kembali" class="span11" placeholder="" />
                         </div>
                       </div>
                       <p></p>
                       <center>
-                        <button type="submit" value="<?php echo $result_harga['id_order']; ?>" name="save_order" class="btn btn-success btn-mini">
+                        <button type="submit" value="<?php echo $result_harga['id_order']; ?>" name="save_order" class="btn btn-success btn-mini" id="btn-transaksi" disabled>
                           <i class='icon-print'></i>
                           &nbsp;&nbsp;Transaksi Selesai&nbsp;&nbsp;
                         </button>
@@ -230,6 +230,8 @@ if (isset($_SESSION['username'])) {
                       </center>
                       <p></p><br>
                     </form>
+
+
                   </div>
                 </div>
               </div>
@@ -267,28 +269,32 @@ if (isset($_SESSION['username'])) {
                       echo "Error: " . mysqli_error($conn);
                     }
                   } else {
-                    echo "Error: " . mysqli_error($conn); 
+                    echo "Error: " . mysqli_error($conn);
                   }
                 }
               }
-
             }
             ?>
           </div>
           <!--End-Action boxes-->
         </div>
       </div>
-      <script type="text/javascript">
+      <script>
         function operasi() {
-          var total_biaya = $("#total_biaya").text();
-          var uang_bayar = $("#uang_bayar").val();
-          var kembalian = Number(uang_bayar - total_biaya);
+          var total_biaya = parseFloat($("#total_biaya").text());
+          var uang_bayar = parseFloat($("#uang_bayar").val());
+          var kembalian = uang_bayar - total_biaya;
+
           if (kembalian < 0) {
+            $("#uang_kembali1").val("");
+            $("#uang_kembali").val("");
+            $("#btn-transaksi").prop("disabled", true);
             alert("Uang pembayaran kurang !");
-            return false;
+          } else {
+            $("#uang_kembali1").val(kembalian);
+            $("#uang_kembali").val(kembalian);
+            $("#btn-transaksi").prop("disabled", false);
           }
-          $("#uang_kembali1").val(kembalian);
-          $("#uang_kembali").val(kembalian);
         }
       </script>
       <!--end-main-container-part-->
