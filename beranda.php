@@ -5,7 +5,10 @@ include "connection/koneksi.php";
 session_start();
 ob_start();
 
-
+if (!isset($_SERVER['HTTP_REFERER'])) {
+  header('Location: logout.php');
+  exit;
+}
 
 
 
@@ -177,7 +180,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
                     <div class="span9">
                       <!--DATA WAITER-->
                       <div class="widget-box">
-                      <?php
+                        <?php
                         $query_data_adm = "select * from tb_user where id_level = 1";
                         $sql_data_adm = mysqli_query($conn, $query_data_adm);
                         $no = 1;
@@ -230,7 +233,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
                                       ?>
                                     </form>
                                   </td>
-                                </tr> 
+                                </tr>
                               <?php
                               }
                               ?>
@@ -533,7 +536,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
             <?php
             } else {
             ?>
-            <!-- Beranda User sama Kasir -->
+              <!-- Beranda User sama Kasir -->
               <div class="alert alert-orange alert-block" name="alertx" id="alertx">
                 <!-- <center>
                   <h4 class="alert-heading">SELAMAT DATANG</h4>
@@ -541,36 +544,36 @@ if (isset($_SESSION['username']) && isset($_SESSION['id_user'])) {
                   <br> Semoga hari Anda menyenangkan.
                 </center> -->
                 <!-- ABOUT -->
-              <section class="about" id="about">
+                <section class="about" id="about">
                   <h1 class="heading">About us<span> why choose us</span> </h1>
                   <div class="row">
-                      <div class="image">
-                          <img src="gambar/about-img.png" height="" alt="">
-                      </div>
+                    <div class="image">
+                      <img src="gambar/about-img.png" height="" alt="">
+                    </div>
 
-                      <div class="content">
-                          <h3 class="title">What's make our coffee special!</h3>
-                          <p>Takofee is one of the fastest growing grab-and-go coffee chain in Indonesia. 
-                            The idea of Takofee started because the founders have the mission to spread their passion for Indonesian coffee 
-                            as a local brand from Indonesia to the rest of the world.</p>
-                          <!-- <a href="#" class="btn">read more</a> -->
-                          <div class="icons-container">
-                              <div class="icons">
-                                  <img src="gambar/about-icon-1.png" alt="">
-                                  <h3>Quality Coffee</h3>
-                              </div>
-                              <div class="icons">
-                                  <img src="gambar/about-icon-2.png" alt="">
-                                  <h3>Our Branches</h3>
-                              </div>
-                              <div class="icons">
-                                  <img src="gambar/about-icon-3.png" alt="">
-                                  <h3>Free Delivery</h3>
-                              </div>
-                          </div>
+                    <div class="content">
+                      <h3 class="title">What's make our coffee special!</h3>
+                      <p>Takofee is one of the fastest growing grab-and-go coffee chain in Indonesia.
+                        The idea of Takofee started because the founders have the mission to spread their passion for Indonesian coffee
+                        as a local brand from Indonesia to the rest of the world.</p>
+                      <!-- <a href="#" class="btn">read more</a> -->
+                      <div class="icons-container">
+                        <div class="icons">
+                          <img src="gambar/about-icon-1.png" alt="">
+                          <h3>Quality Coffee</h3>
+                        </div>
+                        <div class="icons">
+                          <img src="gambar/about-icon-2.png" alt="">
+                          <h3>Our Branches</h3>
+                        </div>
+                        <div class="icons">
+                          <img src="gambar/about-icon-3.png" alt="">
+                          <h3>Free Delivery</h3>
+                        </div>
                       </div>
+                    </div>
                   </div>
-              </section>
+                </section>
               </div>
             <?php
             }

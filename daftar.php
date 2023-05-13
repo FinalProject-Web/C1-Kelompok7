@@ -131,10 +131,14 @@ session_start();
                       text: 'Username sudah ada. Silakan gunakan username lain.'
                     });
                   </script>
-                ";
+                  ";
                 } else {
                   // Jika username belum ada, lakukan proses pendaftaran
-                  $query_daftar = "INSERT INTO tb_user VALUES ('', '$username', '$password', '$nama_user', '$id_level', '$status')";
+
+                  // Hash password sebelum menyimpan ke database
+                  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                  $query_daftar = "INSERT INTO tb_user VALUES ('', '$username', '$hashed_password', '$nama_user', '$id_level', '$status')";
                   $sql_daftar = mysqli_query($conn, $query_daftar);
                   if ($sql_daftar) {
                     // Jika pendaftaran berhasil, tampilkan popup t
@@ -148,8 +152,8 @@ session_start();
                         window.location.href = 'index.php'; // Redirect ke halaman lain setelah popup ditutup
                       });
                     </script>
-                  ";
-                  $_SESSION['daftar'] = 'sukses';
+                    ";
+                    $_SESSION['daftar'] = 'sukses';
                   }
                 }
               }
