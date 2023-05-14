@@ -260,8 +260,12 @@ if (isset($_SESSION['username'])) {
                   if (mysqli_num_rows($result_sudah_order) > 0) {
                     // Tampilkan hasil pencarian
                   } else {
-                    echo "Nama tidak ditemukan.";
-
+                    // Nama tidak ditemukan
+                    echo '<script>';
+                    echo 'swal("Nama tidak ditemukan", "", "error").then(() => { window.location.href = "entri_transaksi.php"; });';
+                    echo '</script>';
+                  
+                    // Reset the query without the search condition
                     $query_sudah_order = "SELECT * FROM tb_order LEFT JOIN tb_user ON tb_order.id_pengunjung = tb_user.id_user WHERE status_order = 'sudah bayar'";
                     $result_sudah_order = mysqli_query($conn, $query_sudah_order);
                   }
